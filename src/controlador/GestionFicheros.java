@@ -130,8 +130,7 @@ public class GestionFicheros {
         añadirFooter(document);
         document.close();
         añadirImagen(document, fact, new File("tienda/facturas/PDF/" + f.getId() + "ConIMG.pdf"
-        ), new File("125.png")
-        );
+        ), new File("125.png"), new File("direcciones.png"));
 
     }
 
@@ -308,18 +307,27 @@ public class GestionFicheros {
         }
     }
 
-    public static void añadirImagen(Document document, File source, File dest, File img) {
+    public static void añadirImagen(Document document, File source, File dest, File img, File qr) {
         try {
             PdfReader reader = new PdfReader(source.getAbsolutePath());
             PdfStamper stamer = new PdfStamper(reader, new FileOutputStream(dest.getAbsolutePath()));
             Image image = Image.getInstance(img.getAbsolutePath());
+            Image qrImg = Image.getInstance(qr.getAbsolutePath());
+
             PdfImage stream = new PdfImage(image, "", null);
+            PdfImage stream2 = new PdfImage(qrImg, "", null);
             stream.put(new PdfName("ITXT_SpecialId"), new PdfName("123456789"));
+            stream2.put(new PdfName("ITXT_SpecialId"), new PdfName("123456789"));
             PdfIndirectObject ref = stamer.getWriter().addToBody(stream);
+            PdfIndirectObject ref2 = stamer.getWriter().addToBody(stream2);
             image.setDirectReference(ref.getIndirectReference());
+            qrImg.setDirectReference(ref2.getIndirectReference());
             image.setAbsolutePosition(450, 700);
+            qrImg.setAbsolutePosition(26, 590);
             PdfContentByte over = stamer.getOverContent(1);
+
             over.addImage(image);
+            over.addImage(qrImg);
             stamer.close();
             reader.close();
         } catch (IOException ex) {

@@ -5,7 +5,12 @@
  */
 package vista;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
@@ -23,11 +28,12 @@ public class ListadoFacturas extends javax.swing.JFrame {
      * Creates new form ListadoClientes
      */
     private DefaultTableModel dtm;
-    
+    public Factura activa;
+
     public ListadoFacturas() {
         initComponents();
         cargarComboClientes();
-        
+
     }
 
     /**
@@ -45,7 +51,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
         tablaFacturas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         darDeAltaFactura = new javax.swing.JButton();
-        eliminarLineaBtn = new javax.swing.JButton();
+        verLineaBtn = new javax.swing.JButton();
         eliminarLineaBtn1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -84,11 +90,11 @@ public class ListadoFacturas extends javax.swing.JFrame {
             }
         });
 
-        eliminarLineaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/view (1).png"))); // NOI18N
-        eliminarLineaBtn.setAlignmentY(0.0F);
-        eliminarLineaBtn.addActionListener(new java.awt.event.ActionListener() {
+        verLineaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/view (1).png"))); // NOI18N
+        verLineaBtn.setAlignmentY(0.0F);
+        verLineaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminarLineaBtnActionPerformed(evt);
+                verLineaBtnActionPerformed(evt);
             }
         });
 
@@ -114,7 +120,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(eliminarLineaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(verLineaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(darDeAltaFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(eliminarLineaBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 32, Short.MAX_VALUE)))
@@ -141,7 +147,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(eliminarLineaBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(eliminarLineaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(verLineaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                 .addGap(522, 522, 522))
         );
@@ -150,7 +156,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboBoxClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClienteActionPerformed
-        
+
         if (this.comboBoxCliente.getSelectedItem() != null) {
             //System.out.println(this.comboBoxCliente.getSelectedItem());
             dtm = new DefaultTableModel();
@@ -159,9 +165,10 @@ public class ListadoFacturas extends javax.swing.JFrame {
             dtm.addColumn("Metodo de Pago");
             dtm.addColumn("Fecha");
             dtm.addColumn("Importe");
-            
+
             String[] datos = this.comboBoxCliente.getSelectedItem().toString().split(":");
             Cliente c = controlador.GestionFicheros.listaTienda.get(0).buscarCliente(datos[0].trim());
+
             if (c != null) {
                 llenarTablaFactura(c);
             } else {
@@ -177,9 +184,30 @@ public class ListadoFacturas extends javax.swing.JFrame {
         gf.setVisible(true);
     }//GEN-LAST:event_darDeAltaFacturaActionPerformed
 
-    private void eliminarLineaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarLineaBtnActionPerformed
-
-    }//GEN-LAST:event_eliminarLineaBtnActionPerformed
+    private void verLineaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verLineaBtnActionPerformed
+        int row = this.tablaFacturas.getSelectedRow();
+        String codigo = this.tablaFacturas.getValueAt(row, 0).toString();
+        activa = controlador.GestionFicheros.buscarFactura(codigo);
+        if (this.activa != null) {
+            File file = new File("tienda/facturas/PDF/" + activa.getId() + "ConIMG.pdf");
+            if (file.toString().endsWith(".pdf")) {
+                try {
+                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
+                } catch (IOException ex) {
+                    Logger.getLogger(ListadoFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    desktop.open(file);
+                } catch (IOException ex) {
+                    Logger.getLogger(ListadoFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debes eligir una factura antes de visualizarla");
+        }
+    }//GEN-LAST:event_verLineaBtnActionPerformed
 
     private void eliminarLineaBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarLineaBtn1ActionPerformed
         int row = this.tablaFacturas.getSelectedRow();
@@ -187,7 +215,9 @@ public class ListadoFacturas extends javax.swing.JFrame {
             if (JOptionPane.showConfirmDialog(rootPane, "Seguro que deseas eliminar la factura? Se eliminará de la lista,el pdf y el csv!") == 0) {
                 Factura f;
                 String codigo = this.tablaFacturas.getValueAt(row, 0).toString();
+                this.dtm.removeRow(row);
                 f = controlador.GestionFicheros.buscarFactura(codigo);
+
                 if (f != null) {
                     System.out.println(f.toString());
                     controlador.GestionFicheros.borrarFactura(f);
@@ -241,12 +271,12 @@ public class ListadoFacturas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboBoxCliente;
     private javax.swing.JButton darDeAltaFactura;
-    private javax.swing.JButton eliminarLineaBtn;
     private javax.swing.JButton eliminarLineaBtn1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturas;
+    private javax.swing.JButton verLineaBtn;
     // End of variables declaration//GEN-END:variables
 private void cargarComboClientes() {
         this.comboBoxCliente.removeAllItems();
@@ -255,20 +285,20 @@ private void cargarComboClientes() {
             this.comboBoxCliente.addItem(listaClientes.get(i).getDni() + " : " + listaClientes.get(i).getNombre());
         }
     }
-    
+
     private void llenarTablaFactura(Cliente c) {
         ArrayList<Factura> listaFacturas = c.getFacturas();
         borrarTablaFacturas();
         for (int i = 0; i < listaFacturas.size(); i++) {
-            
+
             Factura factura = listaFacturas.get(i);
             Object[] datos = {factura.getId(), factura.getMp(), factura.getFecha(), factura.getImporte()};
             dtm.addRow(datos);
             this.tablaFacturas.setModel(dtm);
-            
+
         }
     }
-    
+
     private void borrarTablaFacturas() {
         while (0 < dtm.getRowCount()) {
             dtm.removeRow(0);

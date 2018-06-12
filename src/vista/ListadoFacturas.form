@@ -31,13 +31,21 @@
                           <Component id="comboBoxCliente" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="539" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="verLineaBtn" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="darDeAltaFactura" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="eliminarLineaBtn1" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="darDeAltaFactura" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <Component id="eliminarLineaBtn1" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <Component id="csv" alignment="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="24" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="verLineaBtn1" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -66,14 +74,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="darDeAltaFactura" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="eliminarLineaBtn1" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="verLineaBtn" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="csv" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="verLineaBtn1" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" pref="164" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="306" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="522" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -148,7 +159,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="darDeAltaFacturaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="verLineaBtn">
+    <Component class="javax.swing.JButton" name="csv">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/iconos/view (1).png"/>
@@ -156,7 +167,7 @@
         <Property name="alignmentY" type="float" value="0.0"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verLineaBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="csvActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="eliminarLineaBtn1">
@@ -168,6 +179,15 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarLineaBtn1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="verLineaBtn1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="RAW"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verLineaBtn1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

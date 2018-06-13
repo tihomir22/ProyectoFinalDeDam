@@ -299,11 +299,11 @@
         </Component>
         <Component class="javax.swing.JLabel" name="invitado">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel2"/>
+            <Property name="text" type="java.lang.String" value="Modo Invitado"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="400" y="10" width="-1" height="-1"/>
+              <AbsoluteConstraints x="380" y="10" width="90" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

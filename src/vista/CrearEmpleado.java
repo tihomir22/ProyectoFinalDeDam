@@ -138,8 +138,9 @@ public class CrearEmpleado extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton2)
+                        .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(labelAnti)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,6 +240,7 @@ public class CrearEmpleado extends javax.swing.JFrame {
                         try {
                             controlador.GestionFicheros.altaEmpleado(admin);
                             controlador.GestionFicheros.listaTienda.get(0).añadirEmpleado(admin);
+                            controlador.GestionFicheros.generarUsuariosVerdaderos();
                         } catch (IOException ex) {
                             Logger.getLogger(CrearEmpleado.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (empleadoExistente ex) {
@@ -251,6 +253,7 @@ public class CrearEmpleado extends javax.swing.JFrame {
                         try {
                             controlador.GestionFicheros.altaEmpleado(norm);
                             controlador.GestionFicheros.listaTienda.get(0).añadirEmpleado(norm);
+                            controlador.GestionFicheros.generarUsuariosVerdaderos();
                         } catch (IOException ex) {
                             Logger.getLogger(CrearEmpleado.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (empleadoExistente ex) {

@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
 import modelo.Empleado;
@@ -33,6 +34,12 @@ public class EliminarEmpleado extends javax.swing.JFrame {
         dtm.addColumn("Sueldo");
         dtm.addColumn("DNI");
         llenarTabla();
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

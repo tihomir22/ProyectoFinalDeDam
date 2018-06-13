@@ -134,9 +134,8 @@ public class GestionFicheros {
         añadirInfoFactura(document, f);
         añadirContenido(document, f);
         añadirFooter(document);
+        añadirImagen(document);
         document.close();
-        añadirImagen(document, fact, new File("tienda/facturas/PDF/" + f.getId() + "ConIMG.pdf"
-        ), new File("src/iconos/logoMATHRedimensionado.png"), new File("direcciones.png"));
 
     }
 
@@ -339,34 +338,13 @@ public class GestionFicheros {
         }
     }
 
-    public static void añadirImagen(Document document, File source, File dest, File img, File qr) {
-        try {
-            PdfReader reader = new PdfReader(source.getAbsolutePath());
-            PdfStamper stamer = new PdfStamper(reader, new FileOutputStream(dest.getAbsolutePath()));
-            Image image = Image.getInstance(img.getAbsolutePath());
-            Image qrImg = Image.getInstance(qr.getAbsolutePath());
-
-            PdfImage stream = new PdfImage(image, "", null);
-            PdfImage stream2 = new PdfImage(qrImg, "", null);
-            stream.put(new PdfName("ITXT_SpecialId"), new PdfName("123456789"));
-            stream2.put(new PdfName("ITXT_SpecialId"), new PdfName("123456789"));
-            PdfIndirectObject ref = stamer.getWriter().addToBody(stream);
-            PdfIndirectObject ref2 = stamer.getWriter().addToBody(stream2);
-            image.setDirectReference(ref.getIndirectReference());
-            qrImg.setDirectReference(ref2.getIndirectReference());
-            image.setAbsolutePosition(450, 700);
-            qrImg.setAbsolutePosition(26, 590);
-            PdfContentByte over = stamer.getOverContent(1);
-
-            over.addImage(image);
-            over.addImage(qrImg);
-            stamer.close();
-            reader.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Tienda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(Tienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static void añadirImagen(Document document) throws BadElementException, IOException, DocumentException {
+        Image imagen = Image.getInstance("src/iconos/logoMATHRedimensionado.png");
+        imagen.setAbsolutePosition(450, 700);
+        Image imagen2 = Image.getInstance("direcciones.png");
+        imagen2.setAbsolutePosition(26, 590);
+        document.add(imagen);
+        document.add(imagen2);
     }
 
     public static void calcularResultadoYPDF(Paragraph subCatPart, Factura f) {
@@ -486,21 +464,17 @@ public class GestionFicheros {
             rutaInicial.delete();
             System.out.println("Eliminando tambien facturas del cliente..."); // Eliminacion en cascada
             for (int i = 0; i < c.getFacturas().size(); i++) {
-                File pdfIMG = new File("tienda/facturas/PDF/" + c.getFacturas().get(i).getId() + "ConIMG.pdf"); // alomejor no son añadidas al cliente en el momento
                 File pdfsinIMG = new File("tienda/facturas/PDF/" + c.getFacturas().get(i).getId() + ".pdf");
                 File facturaCSV = new File("tienda/facturas/CSV/" + c.getFacturas().get(i).getId() + ".csv");
-                if (pdfIMG.exists()) {
-                    System.out.println("Exite el pdf con imagen");
-                }
                 if (pdfsinIMG.exists()) {
                     System.out.println("Exite el pdf sin imagen");
                 }
                 if (facturaCSV.exists()) {
                     System.out.println("Exite la f actura en CSV");
                 }
-                if (pdfIMG.exists() && pdfsinIMG.exists() && facturaCSV.exists()) {
+                if (pdfsinIMG.exists() && facturaCSV.exists()) {
                     System.out.println("Eliminada factura" + c.getFacturas().get(i).getId());
-                    pdfIMG.delete();
+
                     pdfsinIMG.delete();
                     facturaCSV.delete();
                 } else {
@@ -712,7 +686,6 @@ public class GestionFicheros {
             }
             sc.close();
         }
-        
 
     }
 

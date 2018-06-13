@@ -5,6 +5,8 @@
  */
 package vista;
 
+import Excepciones.empleadoExistente;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -238,7 +240,10 @@ public class CrearEmpleado extends javax.swing.JFrame {
                         limpiarCampos();
                         try {
                             controlador.GestionFicheros.altaEmpleado(admin);
+                            controlador.GestionFicheros.cargarEmpleados();
                         } catch (IOException ex) {
+                            Logger.getLogger(CrearEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (empleadoExistente ex) {
                             Logger.getLogger(CrearEmpleado.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else if (this.tipoUsuario.equalsIgnoreCase("normal")) {
@@ -282,7 +287,8 @@ public class CrearEmpleado extends javax.swing.JFrame {
         String cuenta;
         int lenghtNombre = this.jTextField1.getText().length() / 2;
         int lenghtDni = this.txtdni.getText().length() / 2;
-        cuenta = this.jTextField1.getText().substring(0, lenghtNombre) + this.txtdni.getText().substring(lenghtDni, this.txtdni.getText().length());
+        String account = this.jTextField1.getText().trim();
+        cuenta = account.substring(0, lenghtNombre) + this.txtdni.getText().trim().substring(lenghtDni, this.txtdni.getText().length());
         this.txtUsuario1.setText(cuenta);
 
     }//GEN-LAST:event_btnContraActionPerformed

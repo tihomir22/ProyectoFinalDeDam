@@ -9,6 +9,7 @@ import Excepciones.empleadoExistente;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Empleado;
 import modelo.EmpleadoAdmin;
@@ -31,6 +32,12 @@ public class CrearEmpleado extends javax.swing.JFrame {
         this.buttonGroup1.add(this.jRadioButton2);
         this.labelAnti.setVisible(false);
         this.txtAnti.setVisible(false);
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

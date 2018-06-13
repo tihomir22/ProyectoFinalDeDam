@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
@@ -56,6 +57,12 @@ public class generarFactura extends javax.swing.JFrame {
         this.buttonGroup2.add(this.radioltc);
         this.buttonGroup2.add(this.radioiota);
         inicializarFactura();
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

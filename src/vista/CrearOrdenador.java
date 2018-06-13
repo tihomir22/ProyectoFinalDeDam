@@ -9,6 +9,7 @@ import Excepciones.productoExistente;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Ordenador;
 import modelo.Pieza;
@@ -24,6 +25,12 @@ public class CrearOrdenador extends javax.swing.JFrame {
      */
     public CrearOrdenador() {
         initComponents();
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

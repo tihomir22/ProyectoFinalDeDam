@@ -5,6 +5,10 @@
  */
 package vista;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Bienvenidos
@@ -16,6 +20,12 @@ public class ModificarSueldoEmpleados extends javax.swing.JFrame {
      */
     public ModificarSueldoEmpleados() {
         initComponents();
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ import Excepciones.clienteExistente;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Cliente;
 
@@ -23,6 +24,12 @@ public class CrearCliente extends javax.swing.JFrame {
      */
     public CrearCliente() {
         initComponents();
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

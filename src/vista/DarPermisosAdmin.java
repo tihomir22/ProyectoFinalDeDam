@@ -5,17 +5,44 @@
  */
 package vista;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Cliente;
+import modelo.Empleado;
+import modelo.EmpleadoAdmin;
+import modelo.EmpleadoNormal;
+
+
 /**
  *
  * @author Bienvenidos
  */
 public class DarPermisosAdmin extends javax.swing.JFrame {
 
+    private DefaultTableModel dtm;
     /**
      * Creates new form DarPermisosAdmin
      */
     public DarPermisosAdmin() {
         initComponents();
+        dtm = new DefaultTableModel();
+        this.tablaEmpleados.setModel(dtm);
+        dtm.addColumn("Número Empleado");
+        dtm.addColumn("Nombre");
+        dtm.addColumn("Sueldo");
+        dtm.addColumn("DNI");   
+        llenarTabla();
+        
+        try{
+        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        }catch (Exception ex){
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -32,7 +59,7 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        txtAntiguedad = new javax.swing.JTextField();
+        txtAntigüedad = new javax.swing.JTextField();
         btnAtras = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
 
@@ -61,6 +88,11 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/back.png"))); // NOI18N
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add.png"))); // NOI18N
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +110,7 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtAntiguedad, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAntigüedad, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(btnAtras)
                         .addGap(18, 18, 18)
@@ -110,13 +142,37 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
                                 .addGap(0, 12, Short.MAX_VALUE)
                                 .addComponent(btnAtras))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtAntiguedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtAntigüedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        Empleado e;
+        EmpleadoAdmin ea;
+        int row = this.tablaEmpleados.getSelectedRow();
+        String nume = this.tablaEmpleados.getValueAt(row, 0).toString().trim();
+        int nuevaAnt = Integer.parseInt(this.txtAntigüedad.getText());
+        e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
+        if( e != null ){
+            if(e instanceof EmpleadoNormal){
+                ea = (EmpleadoAdmin) e;
+                ea.setAntiguedad(nuevaAnt);
+                JOptionPane.showMessageDialog(this, "La antigüedad ha cabiado exitosamente");
+                DefaultTableModel model = (DefaultTableModel) this.tablaEmpleados.getModel();
+                try{
+                    controlador.GestionFicheros.altaEmpleado(e);
+                } catch (IOException ex) {
+                    Logger.getLogger(ModificarNombreEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("No puedes modificar la antigüedad de un administrador");
+            }
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +217,24 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaEmpleados;
-    private javax.swing.JTextField txtAntiguedad;
+    private javax.swing.JTextField txtAntigüedad;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarTabla() {
+        ArrayList<Empleado> empleados = controlador.GestionFicheros.getListaTienda().get(0).getListaEmpleados();
+        borrarTable();
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado emp = empleados.get(i);
+            Object[] datos = {emp.getNumEmpleado(), emp.getNombre(), emp.getSueldo(), emp.getDni()};
+            dtm.addRow(datos);
+            this.tablaEmpleados.setModel(dtm);
+        }
+    }
+
+    private void borrarTable() {
+        while (0 < dtm.getRowCount()) {
+            dtm.removeRow(0);
+        }
+    }
+
 }

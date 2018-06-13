@@ -161,8 +161,10 @@ public class CrearPiezas extends javax.swing.JFrame {
 
     private void darDeAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darDeAltaBtnActionPerformed
         if (this.txtCodigo.getText().length() > 0 && this.txtNombre.getText().length() > 0 && this.txtPrecio.getText().length() > 0) {
-            Double precio = Double.parseDouble(this.txtPrecio.getText());
-            Pieza p = new Pieza(1, this.txtNombre.getText(), this.txtCodigo.getText(), precio);
+            float precio = Math.round(Double.parseDouble(this.txtPrecio.getText()));
+            String precio2 = "" + precio;
+            Pieza p = new Pieza(1, this.txtNombre.getText(), this.txtCodigo.getText(), Double.parseDouble(precio2));
+
             try {
                 controlador.GestionFicheros.listaTienda.get(0).añadirProducto(p);
                 controlador.GestionFicheros.altaProducto(p);

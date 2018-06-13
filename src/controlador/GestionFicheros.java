@@ -29,6 +29,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +43,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.Cliente;
 import modelo.Empleado;
 import modelo.EmpleadoAdmin;
@@ -229,7 +231,33 @@ public class GestionFicheros {
         document.add(p1);
 
     }
-
+    
+    public static void eliminarEmpleado(Empleado e) throws FileNotFoundException{
+        File f = new File("tienda/empleados/"+e.getDni()+".csv");
+        String  linea;
+        String[] datos;
+        ArrayList a = new ArrayList();
+        if (f.exists()) {
+            System.out.println("eliminando ficheros...");
+            Scanner scF = new Scanner(f);
+            linea = scF.nextLine();
+            scF.close();
+            datos = linea.split(";");
+            if(!datos[0].equalsIgnoreCase("Administrador")){
+                f.delete();
+            }else{
+                System.out.println("No puedes eliminar un administrador...");
+            }
+        } else {
+            System.out.println("No fueron inicializadas las rutas basicas, pruebe otra vez");
+            try {
+                generacionDeEstructurasBasicas();
+            } catch (IOException ex) {
+                Logger.getLogger(GestionFicheros.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     public static void añadirFooter(Document document) throws DocumentException {
         Paragraph preface = new Paragraph();
         añadirLineasVacias(preface, 1);

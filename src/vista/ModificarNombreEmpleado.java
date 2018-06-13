@@ -5,17 +5,36 @@
  */
 package vista;
 
+import Excepciones.empleadoNoExistente;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Empleado;
+import modelo.EmpleadoAdmin;
+import modelo.EmpleadoNormal;
+
 /**
  *
  * @author Bienvenidos
  */
 public class ModificarNombreEmpleado extends javax.swing.JFrame {
 
+    private DefaultTableModel dtm;
     /**
      * Creates new form ModificarNombreEmpleado
      */
     public ModificarNombreEmpleado() {
         initComponents();
+        dtm = new DefaultTableModel();
+        this.tablaEmpleados.setModel(dtm);
+        dtm.addColumn("Número Empleado");
+        dtm.addColumn("Nombre");
+        dtm.addColumn("Sueldo");
+        dtm.addColumn("DNI");
+        llenarTabla();
     }
 
     /**
@@ -57,8 +76,18 @@ public class ModificarNombreEmpleado extends javax.swing.JFrame {
         jLabel2.setText("Escriba el nuevo nombre:");
 
         btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,6 +126,35 @@ public class ModificarNombreEmpleado extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Empleado e;
+        EmpleadoNormal en;
+        int row = this.tablaEmpleados.getSelectedRow();
+        String nume = this.tablaEmpleados.getValueAt(row, 0).toString().trim();
+        String nuevoNombre = this.txtNuevoNombre.getText();
+        e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
+        if( e != null ){
+            if(e instanceof EmpleadoNormal){
+                en = (EmpleadoNormal) e;
+                en.setNombre(nuevoNombre);
+                JOptionPane.showMessageDialog(this, "Nombre cambiado exitosamente");
+                DefaultTableModel model = (DefaultTableModel) this.tablaEmpleados.getModel();
+                try{
+                    controlador.GestionFicheros.altaEmpleado(e);
+                } catch (IOException ex) {
+                    Logger.getLogger(ModificarNombreEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("No puedes modificar el nombre de un administrador");
+            }
+        }
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        super.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,4 +200,21 @@ public class ModificarNombreEmpleado extends javax.swing.JFrame {
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTextField txtNuevoNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarTabla() {
+        ArrayList<Empleado> empleados = controlador.GestionFicheros.getListaTienda().get(0).getListaEmpleados();
+        borrarTable();
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado emp = empleados.get(i);
+            Object[] datos = {emp.getNumEmpleado(), emp.getNombre(), emp.getSueldo(), emp.getDni()};
+            dtm.addRow(datos);
+            this.tablaEmpleados.setModel(dtm);
+        }
+    }
+    
+    private void borrarTable() {
+        while (0 < dtm.getRowCount()) {
+            dtm.removeRow(0);
+        }
+    }
 }

@@ -5,17 +5,34 @@
  */
 package vista;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Empleado;
+import modelo.EmpleadoNormal;
+
 /**
  *
  * @author Bienvenidos
  */
 public class ModificarSueldoEmpleado extends javax.swing.JFrame {
 
+    private DefaultTableModel dtm;
     /**
      * Creates new form ModificarSueldoEmpleado
      */
     public ModificarSueldoEmpleado() {
         initComponents();
+        dtm = new DefaultTableModel();
+        this.TablaEmpleados.setModel(dtm);
+        dtm.addColumn("Número Empleado");
+        dtm.addColumn("Nombre");
+        dtm.addColumn("Sueldo");
+        dtm.addColumn("DNI");
+        llenarTabla();
     }
 
     /**
@@ -63,6 +80,11 @@ public class ModificarSueldoEmpleado extends javax.swing.JFrame {
         });
 
         btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
 
@@ -105,8 +127,32 @@ public class ModificarSueldoEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNuevoSueldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNuevoSueldoActionPerformed
-        // TODO add your handling code here:
+        Empleado e;
+        EmpleadoNormal en;
+        int row = this.TablaEmpleados.getSelectedRow();
+        String nume = this.TablaEmpleados.getValueAt(row, 0).toString().trim();
+        Double nuevoSueldo = Double.parseDouble(this.txtNuevoSueldo.getText());
+        e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
+        if( e != null ){
+            if(e instanceof EmpleadoNormal){
+                en = (EmpleadoNormal) e;
+                en.setSueldo(nuevoSueldo);
+                JOptionPane.showMessageDialog(this, "Nombre cambiado exitosamente");
+                DefaultTableModel model = (DefaultTableModel) this.TablaEmpleados.getModel();
+                try{
+                    controlador.GestionFicheros.altaEmpleado(e);
+                } catch (IOException ex) {
+                    Logger.getLogger(ModificarNombreEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("No puedes modificar el nombre de un administrador");
+            }
+        }
     }//GEN-LAST:event_txtNuevoSueldoActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        super.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,4 +198,20 @@ public class ModificarSueldoEmpleado extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtNuevoSueldo;
     // End of variables declaration//GEN-END:variables
+    private void llenarTabla() {
+        ArrayList<Empleado> empleados = controlador.GestionFicheros.getListaTienda().get(0).getListaEmpleados();
+        borrarTable();
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado emp = empleados.get(i);
+            Object[] datos = {emp.getNumEmpleado(), emp.getNombre(), emp.getSueldo(), emp.getDni()};
+            dtm.addRow(datos);
+            this.TablaEmpleados.setModel(dtm);
+        }
+    }
+    
+    private void borrarTable() {
+        while (0 < dtm.getRowCount()) {
+            dtm.removeRow(0);
+        }
+    }
 }

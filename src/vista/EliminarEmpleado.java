@@ -5,17 +5,34 @@
  */
 package vista;
 
+import Excepciones.empleadoNoExistente;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import modelo.Cliente;
+import modelo.Empleado;
+
 /**
  *
  * @author Bienvenidos
  */
 public class EliminarEmpleado extends javax.swing.JFrame {
-
+    
+    private DefaultTableModel dtm;
     /**
      * Creates new form EliminarEmpleado
      */
     public EliminarEmpleado() {
         initComponents();
+        dtm = new DefaultTableModel();
+        this.jTable1.setModel(dtm);
+        dtm.addColumn("Número Empleado");
+        dtm.addColumn("Nombre");
+        dtm.addColumn("Sueldo");
+        dtm.addColumn("DNI");
+        llenarTabla();
     }
 
     /**
@@ -39,7 +56,7 @@ public class EliminarEmpleado extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel1.setText("Eliminar Empleado");
 
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add.png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/substract.png"))); // NOI18N
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -60,6 +77,11 @@ public class EliminarEmpleado extends javax.swing.JFrame {
         tablaEmpleados.setViewportView(jTable1);
 
         btnAtras1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/back.png"))); // NOI18N
+        btnAtras1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtras1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,8 +117,24 @@ public class EliminarEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        Empleado e;
+        int row = this.jTable1.getSelectedRow();
+        String nume = this.jTable1.getValueAt(row, 0).toString().trim();
+        e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
+        try{
+            controlador.GestionFicheros.getListaTienda().get(0).eliminarEmpleado(e);
+            controlador.GestionFicheros.eliminarEmpleado(e);
+            this.dtm.removeRow(row);
+        }catch(empleadoNoExistente ex){
+            Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EliminarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAtras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtras1ActionPerformed
+        super.dispose();
+    }//GEN-LAST:event_btnAtras1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,4 +178,22 @@ public class EliminarEmpleado extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JScrollPane tablaEmpleados;
     // End of variables declaration//GEN-END:variables
+
+
+    private void llenarTabla() {
+        ArrayList<Empleado> empleados = controlador.GestionFicheros.getListaTienda().get(0).getListaEmpleados();
+        borrarTable();
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado emp = empleados.get(i);
+            Object[] datos = {emp.getNumEmpleado(), emp.getNombre(), emp.getSueldo(), emp.getDni()};
+            dtm.addRow(datos);
+            this.jTable1.setModel(dtm);
+        }
+    }
+    
+    private void borrarTable() {
+        while (0 < dtm.getRowCount()) {
+            dtm.removeRow(0);
+        }
+    }
 }

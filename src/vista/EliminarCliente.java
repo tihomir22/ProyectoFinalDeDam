@@ -28,6 +28,7 @@ public class EliminarCliente extends javax.swing.JFrame {
         initComponents();
         dtm = new DefaultTableModel();
         this.TablaClientes.setModel(dtm);
+        this.
         dtm.addColumn("DNI");
         dtm.addColumn("Nombre");
         dtm.addColumn("Direccion");

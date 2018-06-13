@@ -36,10 +36,13 @@ public class home extends javax.swing.JFrame {
      */
     private boolean loginExitoso = false;
     private boolean accesoAdmin = false;
-
+    private boolean modoInvitado = false;
+    
     public home() {
         initComponents();
         this.estadoVisual.setBackground(Color.red);
+        this.invitado.setVisible(false);
+        this.invitado.setForeground(Color.white);
         this.informeEstado.setForeground(Color.white);
         this.jLabel3.setForeground(Color.white);
         this.jLabel4.setForeground(Color.white);
@@ -82,6 +85,7 @@ public class home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -211,7 +215,7 @@ public class home extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(desconexion, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                            .addComponent(desconexion, javax.swing.GroupLayout.PREFERRED_SIZE, 128, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(estadoVisual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,7 +418,7 @@ public class home extends javax.swing.JFrame {
 
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
+        
         if (this.buscarUsuario(this.jTextPane1.getText(), this.jTextPane2.getText())) {
             System.out.println("LOGIN CORRECTO");
             this.loginExitoso = true;
@@ -511,7 +515,7 @@ public class home extends javax.swing.JFrame {
             modifSueldoEmpleado.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
-
+            
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
@@ -568,30 +572,47 @@ public class home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
-
+    
     private boolean buscarUsuario(String usuario, String pass) {
         File ficheroAbuscar = new File("invitados.txt");
+        File usuariosReales = new File("empleados.csv");
+        boolean loginCorrecto = false;
         String linea;
         String[] arrayAnalizado;
         try {
             Scanner sc = new Scanner(ficheroAbuscar);
             while (sc.hasNext()) {
-                linea = sc.next();
+                linea = sc.nextLine();
                 arrayAnalizado = linea.split(";");
                 //System.out.println("COMPARANDO "+usuario+" CON "+usuario.length()+" CARACTERES VS "+arrayAnalizado[0]+" DE "+arrayAnalizado[0].length()+" CARACTERES");
                 if (arrayAnalizado[0].equalsIgnoreCase(usuario) && arrayAnalizado[1].equalsIgnoreCase(pass)) {
                     //System.out.println("HAY COINCIDENCIA");
+                    modoInvitado = true;
+                    this.invitado.setVisible(true);
+                    loginCorrecto = true;
                     return true;
                 }
             }
             sc.close();
+            if (loginCorrecto == false) {
+                Scanner sc2 = new Scanner(usuariosReales);
+                while (sc2.hasNext()) {
+                    linea = sc2.nextLine();
+                    arrayAnalizado = linea.split(";");
+                    if (arrayAnalizado[1].equalsIgnoreCase(usuario) && arrayAnalizado[2].equalsIgnoreCase(pass)) {
+                        loginCorrecto = true;
+                        return true;
+                    }
+                }
+                sc2.close();
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-
+        
     }
-
+    
     private void actualizar() {
         if (this.loginExitoso == true) {
             this.estadoVisual.setBackground(Color.green);
@@ -631,10 +652,10 @@ public class home extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-
+            
             public void run() {
                 new home().setVisible(true);
-
+                
             }
         });
     }

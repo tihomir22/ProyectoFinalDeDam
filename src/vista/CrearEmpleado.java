@@ -289,7 +289,8 @@ public class CrearEmpleado extends javax.swing.JFrame {
         String cuenta;
         int lenghtNombre = this.jTextField1.getText().length() / 2;
         int lenghtDni = this.txtdni.getText().length() / 2;
-        cuenta = this.jTextField1.getText().substring(0, lenghtNombre) + this.txtdni.getText().substring(lenghtDni, this.txtdni.getText().length());
+        String account = this.jTextField1.getText().trim();
+        cuenta = account.substring(0, lenghtNombre) + this.txtdni.getText().trim().substring(lenghtDni, this.txtdni.getText().length());
         this.txtUsuario1.setText(cuenta);
 
     }//GEN-LAST:event_btnContraActionPerformed

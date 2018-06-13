@@ -86,6 +86,7 @@ public class home extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        invitado = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -155,6 +156,15 @@ public class home extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setLayout(null);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logoMATH.png"))); // NOI18N
+        jPanel2.add(jLabel1);
+        jLabel1.setBounds(0, 10, 380, 280);
+
+        invitado.setText("jLabel2");
+        jPanel2.add(invitado);
+        invitado.setBounds(400, 10, 51, 15);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -667,6 +677,8 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JPanel estadoVisual;
     private javax.swing.JMenuItem generarFacturaVar;
     private javax.swing.JLabel informeEstado;
+    private javax.swing.JLabel invitado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

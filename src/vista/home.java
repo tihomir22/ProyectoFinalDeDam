@@ -37,7 +37,7 @@ public class home extends javax.swing.JFrame {
     private boolean loginExitoso = false;
     private boolean accesoAdmin = false;
     private boolean modoInvitado = false;
-    
+
     public home() {
         initComponents();
         this.estadoVisual.setBackground(Color.red);
@@ -69,10 +69,10 @@ public class home extends javax.swing.JFrame {
         } catch (empleadoExistente ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -169,7 +169,7 @@ public class home extends javax.swing.JFrame {
 
         invitado.setText("Modo Invitado");
         jPanel2.add(invitado);
-        invitado.setBounds(380, 10, 90, 15);
+        invitado.setBounds(380, 10, 90, 16);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -425,7 +425,7 @@ public class home extends javax.swing.JFrame {
 
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        
+
         if (this.buscarUsuario(this.jTextPane1.getText(), this.jTextPane2.getText())) {
             System.out.println("LOGIN CORRECTO");
             this.loginExitoso = true;
@@ -446,6 +446,7 @@ public class home extends javax.swing.JFrame {
     private void menuCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCrearClienteActionPerformed
         if (this.loginExitoso) {
             vista.CrearCliente crearCliente = new vista.CrearCliente();
+            crearCliente.setLocation(475, 0);
             crearCliente.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -455,6 +456,7 @@ public class home extends javax.swing.JFrame {
     private void menuEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEliminarClienteActionPerformed
         if (this.loginExitoso) {
             vista.EliminarCliente eliminarCliente = new vista.EliminarCliente();
+            eliminarCliente.setLocation(475, 0);
             eliminarCliente.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -464,6 +466,7 @@ public class home extends javax.swing.JFrame {
     private void menuModificarClienteNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarClienteNombreActionPerformed
         if (this.loginExitoso) {
             vista.ModificarClienteNombre modifClienteNombre = new vista.ModificarClienteNombre();
+            modifClienteNombre.setLocation(475, 0);
             modifClienteNombre.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -473,6 +476,7 @@ public class home extends javax.swing.JFrame {
     private void menuModificarClienteTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarClienteTelefonoActionPerformed
         if (this.loginExitoso) {
             vista.ModificarClienteTelefono modifClienteTelefono = new vista.ModificarClienteTelefono();
+            modifClienteTelefono.setLocation(475, 0);
             modifClienteTelefono.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -482,6 +486,7 @@ public class home extends javax.swing.JFrame {
     private void menuModificarClienteDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarClienteDireccionActionPerformed
         if (this.loginExitoso) {
             vista.ModificarClienteDireccion modifClienteDireccion = new vista.ModificarClienteDireccion();
+            modifClienteDireccion.setLocation(475, 0);
             modifClienteDireccion.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -501,6 +506,7 @@ public class home extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         if (this.loginExitoso) {
             vista.EliminarEmpleado eliminarEmpleado = new vista.EliminarEmpleado();
+            eliminarEmpleado.setLocation(475, 0);
             eliminarEmpleado.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -510,6 +516,7 @@ public class home extends javax.swing.JFrame {
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         if (this.loginExitoso) {
             vista.ModificarNombreEmpleado modifNomEmpleado = new vista.ModificarNombreEmpleado();
+            modifNomEmpleado.setLocation(475, 0);
             modifNomEmpleado.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -574,7 +581,7 @@ public class home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
-    
+
     private boolean buscarUsuario(String usuario, String pass) {
         File ficheroAbuscar = new File("invitados.txt");
         File usuariosReales = new File("empleados.csv");
@@ -612,9 +619,9 @@ public class home extends javax.swing.JFrame {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-        
+
     }
-    
+
     private void actualizar() {
         if (this.loginExitoso == true) {
             this.estadoVisual.setBackground(Color.green);
@@ -624,8 +631,6 @@ public class home extends javax.swing.JFrame {
             this.estadoVisual.setBackground(Color.red);
         }
     }
-    
-    
 
     /**
      * @param args the command line arguments
@@ -656,10 +661,10 @@ public class home extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            
+
             public void run() {
                 new home().setVisible(true);
-                
+
             }
         });
     }

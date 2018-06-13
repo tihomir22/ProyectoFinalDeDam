@@ -57,7 +57,7 @@ public class CrearOrdenador extends javax.swing.JFrame {
 
         jLabel3.setText("Codigo #");
 
-        jLabel4.setText("Nombre de setup#");
+        jLabel4.setText("Nombre de setup #");
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +109,7 @@ public class CrearOrdenador extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
-                        .addGap(0, 375, Short.MAX_VALUE))
+                        .addGap(0, 372, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

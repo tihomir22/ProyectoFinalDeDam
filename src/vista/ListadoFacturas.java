@@ -204,7 +204,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
 
     private void darDeAltaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darDeAltaFacturaActionPerformed
         generarFactura gf = new generarFactura();
-        gf.setLocation(1175, 0);
+        gf.setLocation(1155, 0);
         gf.setVisible(true);
     }//GEN-LAST:event_darDeAltaFacturaActionPerformed
 
@@ -236,7 +236,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
                 }*/
                 if (Desktop.isDesktopSupported()) {
 
-                    File file = new File("tienda/facturas/PDF/" + activa.getId() + "ConIMG.pdf");
+                    File file = new File("tienda/facturas/PDF/" + activa.getId() + ".pdf");
                     try {
                         Desktop.getDesktop().open(file);
                     } catch (IOException ex) {

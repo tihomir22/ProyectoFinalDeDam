@@ -17,7 +17,6 @@ import modelo.Empleado;
 import modelo.EmpleadoAdmin;
 import modelo.EmpleadoNormal;
 
-
 /**
  *
  * @author Bienvenidos
@@ -25,6 +24,7 @@ import modelo.EmpleadoNormal;
 public class DarPermisosAdmin extends javax.swing.JFrame {
 
     private DefaultTableModel dtm;
+
     /**
      * Creates new form DarPermisosAdmin
      */
@@ -35,12 +35,12 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         dtm.addColumn("Número Empleado");
         dtm.addColumn("Nombre");
         dtm.addColumn("Sueldo");
-        dtm.addColumn("DNI");   
+        dtm.addColumn("DNI");
         llenarTabla();
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -63,7 +63,7 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         btnAtras = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/business_user.png"))); // NOI18N
 
@@ -150,18 +150,17 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         String nume = this.tablaEmpleados.getValueAt(row, 0).toString().trim();
         int nuevaAnt = Integer.parseInt(this.txtAntigüedad.getText());
         e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
-        if( e != null ){
-            if(e instanceof EmpleadoNormal){
+        if (e != null) {
+            if (e instanceof EmpleadoAdmin) {
                 ea = (EmpleadoAdmin) e;
-                ea.setAntiguedad(nuevaAnt);
                 JOptionPane.showMessageDialog(this, "La antigüedad ha cabiado exitosamente");
                 DefaultTableModel model = (DefaultTableModel) this.tablaEmpleados.getModel();
-                try{
+                try {
                     controlador.GestionFicheros.altaEmpleado(e);
                 } catch (IOException ex) {
                     Logger.getLogger(ModificarNombreEmpleado.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else{
+            } else {
                 System.out.println("No puedes modificar la antigüedad de un administrador");
             }
         }

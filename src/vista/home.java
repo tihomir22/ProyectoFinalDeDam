@@ -377,6 +377,7 @@ public class home extends javax.swing.JFrame {
 
         menuEmpleados.add(jMenu2);
 
+        jMenuItem10.setForeground(new java.awt.Color(255, 0, 51));
         jMenuItem10.setText("Modo Administrador");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

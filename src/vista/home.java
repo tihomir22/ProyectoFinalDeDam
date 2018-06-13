@@ -85,7 +85,7 @@ public class home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        invitado = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -155,10 +155,6 @@ public class home extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setLayout(null);
-
-        invitado.setText("Modo Invitado");
-        jPanel2.add(invitado);
-        invitado.setBounds(350, 10, 110, 15);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -671,7 +667,6 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JPanel estadoVisual;
     private javax.swing.JMenuItem generarFacturaVar;
     private javax.swing.JLabel informeEstado;
-    private javax.swing.JLabel invitado;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

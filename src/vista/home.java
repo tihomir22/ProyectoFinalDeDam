@@ -162,9 +162,9 @@ public class home extends javax.swing.JFrame {
         jPanel2.add(jLabel1);
         jLabel1.setBounds(0, 10, 380, 280);
 
-        invitado.setText("jLabel2");
+        invitado.setText("Modo Invitado");
         jPanel2.add(invitado);
-        invitado.setBounds(400, 10, 51, 15);
+        invitado.setBounds(370, 10, 90, 16);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -225,7 +225,7 @@ public class home extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(desconexion, javax.swing.GroupLayout.PREFERRED_SIZE, 128, Short.MAX_VALUE)))
+                            .addComponent(desconexion, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(estadoVisual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

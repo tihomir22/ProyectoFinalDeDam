@@ -162,8 +162,10 @@ public class CrearServicio extends javax.swing.JFrame {
 
     private void darDeAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darDeAltaBtnActionPerformed
         if (this.txtCodigo.getText().length() > 0 && this.txtNombre.getText().length() > 0 && this.txtPrecio.getText().length() > 0) {
-            Double precio = Double.parseDouble(this.txtPrecio.getText());
-            Servicio s = new Servicio(1, this.txtNombre.getText(), this.txtCodigo.getText(), precio);
+            //Double precio = Double.parseDouble(this.txtPrecio.getText());
+            float precio = Math.round(Double.parseDouble(this.txtPrecio.getText()));
+            String precio2 = "" + precio;
+            Servicio s = new Servicio(1, this.txtNombre.getText(), this.txtCodigo.getText(), Double.parseDouble(precio2));
             try {
                 controlador.GestionFicheros.listaTienda.get(0).añadirProducto(s);
                 controlador.GestionFicheros.altaProducto(s);

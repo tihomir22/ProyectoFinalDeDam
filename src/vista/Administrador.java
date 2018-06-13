@@ -5,6 +5,13 @@
  */
 package vista;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Bienvenidos
@@ -27,25 +34,175 @@ public class Administrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        nombreUsu = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        contraseñaUsu = new javax.swing.JTextField();
+        btnCambiaSueldos = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        btnPermisos = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/business_user.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setText("Modo Administrador");
+
+        jLabel3.setText("Usuario: ");
+
+        nombreUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreUsuActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Contraseña:");
+
+        contraseñaUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraseñaUsuActionPerformed(evt);
+            }
+        });
+
+        btnCambiaSueldos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/eur@2x.png"))); // NOI18N
+        btnCambiaSueldos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiaSueldosActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Modificar sueldo");
+
+        jLabel6.setText("Dar permisos de administrador");
+
+        btnPermisos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/employee.png"))); // NOI18N
+        btnPermisos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPermisosActionPerformed(evt);
+            }
+        });
+
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/back.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nombreUsu)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contraseñaUsu)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCambiaSueldos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(159, 159, 159)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPermisos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 92, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAtras)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nombreUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(contraseñaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCambiaSueldos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPermisos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(btnAtras)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void contraseñaUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraseñaUsuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contraseñaUsuActionPerformed
+
+    private void btnCambiaSueldosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiaSueldosActionPerformed
+            if(this.buscarUsuario(this.nombreUsu.getText(), this.contraseñaUsu.getText())==true){
+            vista.ModificarSueldoEmpleados modifSueldo = new vista.ModificarSueldoEmpleados();
+            modifSueldo.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
+            }
+    }//GEN-LAST:event_btnCambiaSueldosActionPerformed
+
+    private void btnPermisosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermisosActionPerformed
+            if(this.buscarUsuario(this.nombreUsu.getText(), this.contraseñaUsu.getText())==true){
+            vista.DarPermisosAdmin nuevoAdmin = new vista.DarPermisosAdmin();
+            nuevoAdmin.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
+            }
+    }//GEN-LAST:event_btnPermisosActionPerformed
+
+    private void nombreUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreUsuActionPerformed
+        
+    }//GEN-LAST:event_nombreUsuActionPerformed
+
+     private boolean buscarUsuario(String usuario, String pass) {
+        File usuariosReales = new File("empleados.csv");
+        boolean loginCorrecto = false;
+        String linea;
+        String[] arrayAnalizado;
+        try {
+            Scanner sc = new Scanner(usuariosReales);
+            while (sc.hasNext()) {
+                    linea = sc.nextLine();
+                    arrayAnalizado = linea.split(";");
+                    if (arrayAnalizado[1].equalsIgnoreCase(usuario) && arrayAnalizado[2].equalsIgnoreCase(pass)) {
+                        if (arrayAnalizado[0].equalsIgnoreCase("Administrador")){
+                        loginCorrecto = true;
+                        return true;
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "Usted no es un administrador. no puede realizar la accion");
+                            return false;
+                        }
+                    }
+                }
+            sc.close();
+            } catch (FileNotFoundException ex) {
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+        
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -79,5 +236,16 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnCambiaSueldos;
+    private javax.swing.JButton btnPermisos;
+    private javax.swing.JTextField contraseñaUsu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField nombreUsu;
     // End of variables declaration//GEN-END:variables
 }

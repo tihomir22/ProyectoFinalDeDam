@@ -556,7 +556,12 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarFacturaVarActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
+        if (this.loginExitoso) {
+            vista.Administrador admin = new Administrador();
+            admin.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
+        }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed

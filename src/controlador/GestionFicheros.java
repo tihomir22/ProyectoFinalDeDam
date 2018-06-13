@@ -231,10 +231,10 @@ public class GestionFicheros {
         document.add(p1);
 
     }
-    
-    public static void eliminarEmpleado(Empleado e) throws FileNotFoundException{
-        File f = new File("tienda/empleados/"+e.getDni()+".csv");
-        String  linea;
+
+    public static void eliminarEmpleado(Empleado e) throws FileNotFoundException {
+        File f = new File("tienda/empleados/" + e.getDni() + ".csv");
+        String linea;
         String[] datos;
         ArrayList a = new ArrayList();
         if (f.exists()) {
@@ -243,9 +243,9 @@ public class GestionFicheros {
             linea = scF.nextLine();
             scF.close();
             datos = linea.split(";");
-            if(!datos[0].equalsIgnoreCase("Administrador")){
+            if (!datos[0].equalsIgnoreCase("Administrador")) {
                 f.delete();
-            }else{
+            } else {
                 System.out.println("No puedes eliminar un administrador...");
             }
         } else {
@@ -257,7 +257,7 @@ public class GestionFicheros {
             }
         }
     }
-    
+
     public static void añadirFooter(Document document) throws DocumentException {
         Paragraph preface = new Paragraph();
         añadirLineasVacias(preface, 1);
@@ -484,6 +484,29 @@ public class GestionFicheros {
         if (rutaInicial.exists()) {
             System.out.println("eliminando ficheros...");
             rutaInicial.delete();
+            System.out.println("Eliminando tambien facturas del cliente..."); // Eliminacion en cascada
+            for (int i = 0; i < c.getFacturas().size(); i++) {
+                File pdfIMG = new File("tienda/facturas/PDF/" + c.getFacturas().get(i).getId() + "ConIMG.pdf"); // alomejor no son añadidas al cliente en el momento
+                File pdfsinIMG = new File("tienda/facturas/PDF/" + c.getFacturas().get(i).getId() + ".pdf");
+                File facturaCSV = new File("tienda/facturas/CSV/" + c.getFacturas().get(i).getId() + ".csv");
+                if (pdfIMG.exists()) {
+                    System.out.println("Exite el pdf con imagen");
+                }
+                if (pdfsinIMG.exists()) {
+                    System.out.println("Exite el pdf sin imagen");
+                }
+                if (facturaCSV.exists()) {
+                    System.out.println("Exite la f actura en CSV");
+                }
+                if (pdfIMG.exists() && pdfsinIMG.exists() && facturaCSV.exists()) {
+                    System.out.println("Eliminada factura" + c.getFacturas().get(i).getId());
+                    pdfIMG.delete();
+                    pdfsinIMG.delete();
+                    facturaCSV.delete();
+                } else {
+                    System.out.println("No se ha podido eliminar la factura");
+                }
+            }
         } else {
             System.out.println("No fueron inicializadas las rutas basicas, pruebe otra vez");
             try {
@@ -648,6 +671,7 @@ public class GestionFicheros {
             PrintWriter pw = new PrintWriter(destino);
             pw.print(f.formatear());
             pw.close();
+            generarUsuariosVerdaderos();
         } else {
             System.out.println("No fueron inicializadas las rutas basicas, pruebe otra vez");
             try {
@@ -688,7 +712,7 @@ public class GestionFicheros {
             }
             sc.close();
         }
-        generarUsuariosVerdaderos();
+        
 
     }
 
@@ -700,7 +724,7 @@ public class GestionFicheros {
         ArrayList<Empleado> listaEmpleados = controlador.GestionFicheros.listaTienda.get(0).getListaEmpleados();
         PrintWriter pw = new PrintWriter(empleadoscsv);
         for (int i = 0; i < listaEmpleados.size(); i++) {
-            pw.print(listaEmpleados.get(i).formatoUsuario()+"\n");
+            pw.print(listaEmpleados.get(i).formatoUsuario() + "\n");
         }
         pw.close();
     }

@@ -162,8 +162,10 @@ public class CrearOrdenador extends javax.swing.JFrame {
 
     private void darDeAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darDeAltaBtnActionPerformed
         if (this.txtCodigo.getText().length() > 0 && this.txtNombre.getText().length() > 0 && this.txtPrecio.getText().length() > 0) {
-            Double precio = Double.parseDouble(this.txtPrecio.getText());
-            Ordenador o = new Ordenador(1, this.txtNombre.getText(), this.txtCodigo.getText(), precio);
+            //Double precio = Double.parseDouble(this.txtPrecio.getText());
+            float precio = Math.round(Double.parseDouble(this.txtPrecio.getText()));
+            String precio2 = "" + precio;
+            Ordenador o = new Ordenador(1, this.txtNombre.getText(), this.txtCodigo.getText(), Double.parseDouble(precio2));
             try {
                 controlador.GestionFicheros.listaTienda.get(0).añadirProducto(o);
                 controlador.GestionFicheros.altaProducto(o);

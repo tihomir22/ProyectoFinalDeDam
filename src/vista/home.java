@@ -37,6 +37,15 @@ public class home extends javax.swing.JFrame {
     private boolean loginExitoso = false;
     private boolean accesoAdmin = false;
     private boolean modoInvitado = false;
+    private static String infoUsuario;
+
+    public static String getInfoUsuario() {
+        return infoUsuario;
+    }
+
+    public static void setInfoUsuario(String infoUsuario) {
+        home.infoUsuario = infoUsuario;
+    }
 
     public home() {
         initComponents();
@@ -46,6 +55,9 @@ public class home extends javax.swing.JFrame {
         this.informeEstado.setForeground(Color.white);
         this.jLabel3.setForeground(Color.white);
         this.jLabel4.setForeground(Color.white);
+        this.txtAdministrador.setForeground(Color.white);
+        this.txtAdministrador.setVisible(false);
+        this.cuadroAdmin.setVisible(false);
         Tienda t = new Tienda("MATH", " Avinguda de les Corts Valencianes, s/n, 46800 Xàtiva, València", "454354", "64656454", "http://ieslluissimarro.org/");
         controlador.GestionFicheros.listaTienda.add(t);
         try {
@@ -93,6 +105,8 @@ public class home extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         invitado = new javax.swing.JLabel();
+        cuadroAdmin = new javax.swing.JPanel();
+        txtAdministrador = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -170,6 +184,28 @@ public class home extends javax.swing.JFrame {
         invitado.setText("Modo Invitado");
         jPanel2.add(invitado);
         invitado.setBounds(380, 10, 90, 16);
+
+        cuadroAdmin.setBackground(new java.awt.Color(255, 51, 255));
+        cuadroAdmin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        cuadroAdmin.setEnabled(false);
+
+        javax.swing.GroupLayout cuadroAdminLayout = new javax.swing.GroupLayout(cuadroAdmin);
+        cuadroAdmin.setLayout(cuadroAdminLayout);
+        cuadroAdminLayout.setHorizontalGroup(
+            cuadroAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 18, Short.MAX_VALUE)
+        );
+        cuadroAdminLayout.setVerticalGroup(
+            cuadroAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 18, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(cuadroAdmin);
+        cuadroAdmin.setBounds(440, 30, 20, 20);
+
+        txtAdministrador.setText("MODO ADMINISTRADOR");
+        jPanel2.add(txtAdministrador);
+        txtAdministrador.setBounds(300, 30, 140, 16);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -428,6 +464,7 @@ public class home extends javax.swing.JFrame {
 
         if (this.buscarUsuario(this.jTextPane1.getText(), this.jTextPane2.getText())) {
             System.out.println("LOGIN CORRECTO");
+            this.infoUsuario = this.jTextPane1.getText() + ";" + Arrays.toString(this.jTextPane2.getPassword()) + ";";
             this.loginExitoso = true;
             this.jTextPane1.setText("");
             this.jTextPane2.setText("");
@@ -440,6 +477,8 @@ public class home extends javax.swing.JFrame {
 
     private void desconexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconexionActionPerformed
         this.loginExitoso = false;
+        this.accesoAdmin = false;
+        this.modoInvitado = false;
         actualizar();
     }//GEN-LAST:event_desconexionActionPerformed
 
@@ -545,8 +584,13 @@ public class home extends javax.swing.JFrame {
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         if (this.loginExitoso) {
-            vista.Administrador admin = new Administrador();
-            admin.setVisible(true);
+            if (this.accesoAdmin) {
+                vista.Administrador admin = new Administrador();
+                admin.setLocation(475, 0);
+                admin.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "DEBES SER ADMINISTRADOR PARA ACCEDER AL MODO ADMINISTRADOR");
+            }
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
         }
@@ -608,6 +652,9 @@ public class home extends javax.swing.JFrame {
                 while (sc2.hasNext()) {
                     linea = sc2.nextLine();
                     arrayAnalizado = linea.split(";");
+                    if (arrayAnalizado[0].equalsIgnoreCase("Administrador")) {
+                        this.accesoAdmin = true;
+                    }
                     if (arrayAnalizado[1].equalsIgnoreCase(usuario) && arrayAnalizado[2].equalsIgnoreCase(pass)) {
                         loginCorrecto = true;
                         return true;
@@ -630,6 +677,21 @@ public class home extends javax.swing.JFrame {
             this.informeEstado.setText("");
             this.estadoVisual.setBackground(Color.red);
         }
+
+        if (this.accesoAdmin == true) {
+            this.cuadroAdmin.setVisible(true);
+            this.txtAdministrador.setVisible(true);
+        } else {
+            this.cuadroAdmin.setVisible(false);
+            this.txtAdministrador.setVisible(false);
+        }
+
+        if (this.modoInvitado == true) {
+            this.invitado.setVisible(true);
+        } else {
+            this.invitado.setVisible(false);
+        }
+
     }
 
     /**
@@ -671,6 +733,7 @@ public class home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JPanel cuadroAdmin;
     private javax.swing.JButton desconexion;
     private javax.swing.JMenuItem eliminarFacturaVar;
     private javax.swing.JPanel estadoVisual;
@@ -708,5 +771,6 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuModificarClienteNombre;
     private javax.swing.JMenuItem menuModificarClienteTelefono;
     private javax.swing.JMenu menuServicios;
+    private javax.swing.JLabel txtAdministrador;
     // End of variables declaration//GEN-END:variables
 }

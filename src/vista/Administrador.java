@@ -24,10 +24,17 @@ public class Administrador extends javax.swing.JFrame {
      */
     public Administrador() {
         initComponents();
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+        String[] cuenta = home.getInfoUsuario().split(";");
+        String pass = "";
+        int lenghtPass = cuenta[1].length() / 2;
+        this.nombreUsu.setText(cuenta[0]);
+        for (int i = 0; i < lenghtPass; i++) {
+            pass += "*";
+        }
+        this.contraseñaUsu.setText(pass);
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -61,8 +68,9 @@ public class Administrador extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setText("Modo Administrador");
 
-        jLabel3.setText("Usuario: ");
+        jLabel3.setText("Administrador:");
 
+        nombreUsu.setEditable(false);
         nombreUsu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nombreUsuActionPerformed(evt);
@@ -90,6 +98,8 @@ public class Administrador extends javax.swing.JFrame {
         });
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/back.png"))); // NOI18N
+
+        contraseñaUsu.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,8 +144,8 @@ public class Administrador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(contraseñaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addComponent(contraseñaUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
@@ -152,28 +162,28 @@ public class Administrador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCambiaSueldosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiaSueldosActionPerformed
-            if(this.buscarUsuario(this.nombreUsu.getText(), this.contraseñaUsu.getText())==true){
+        if (this.buscarUsuario(this.nombreUsu.getText())) {
             vista.ModificarSueldoEmpleados modifSueldo = new vista.ModificarSueldoEmpleados();
             modifSueldo.setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
-            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
+        }
     }//GEN-LAST:event_btnCambiaSueldosActionPerformed
 
     private void btnPermisosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermisosActionPerformed
-            if(this.buscarUsuario(this.nombreUsu.getText(), this.contraseñaUsu.getText())!=false){
+        if (this.buscarUsuario(this.nombreUsu.getText()) != false) {
             vista.DarPermisosAdmin nuevoAdmin = new vista.DarPermisosAdmin();
             nuevoAdmin.setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
-            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
+        }
     }//GEN-LAST:event_btnPermisosActionPerformed
 
     private void nombreUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreUsuActionPerformed
-        
+
     }//GEN-LAST:event_nombreUsuActionPerformed
 
-     private boolean buscarUsuario(String usuario, String pass) {
+    private boolean buscarUsuario(String usuario) {
         File usuariosReales = new File("empleados.csv");
         boolean loginCorrecto = false;
         String linea;
@@ -181,24 +191,25 @@ public class Administrador extends javax.swing.JFrame {
         try {
             Scanner sc = new Scanner(usuariosReales);
             while (sc.hasNext()) {
-                    linea = sc.nextLine();
-                    arrayAnalizado = linea.split(";");
-                    if (arrayAnalizado[1].equalsIgnoreCase(usuario) && arrayAnalizado[2].equalsIgnoreCase(pass)) {
-                        if (arrayAnalizado[0].equalsIgnoreCase("Administrador")){
+                linea = sc.nextLine();
+                arrayAnalizado = linea.split(";");
+                if (arrayAnalizado[1].equalsIgnoreCase(usuario)) {
+                    if (arrayAnalizado[0].equalsIgnoreCase("Administrador")) {
                         return true;
-                        }else{
-                            JOptionPane.showMessageDialog(rootPane, "Usted no es un administrador. no puede realizar la accion");
-                            return false;
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Usted no es un administrador. no puede realizar la accion");
+                        return false;
                     }
                 }
+            }
             sc.close();
-            } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-        
+
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

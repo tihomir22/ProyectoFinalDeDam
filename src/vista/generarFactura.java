@@ -663,7 +663,7 @@ public class generarFactura extends javax.swing.JFrame {
 
                     if (Desktop.isDesktopSupported()) {
 
-                        File file = new File("tienda/facturas/PDF/" + nuevaFactura.getId() + "ConIMG.pdf");
+                        File file = new File("tienda/facturas/PDF/" + nuevaFactura.getId() + ".pdf");
                         Desktop.getDesktop().open(file);
 
                     }

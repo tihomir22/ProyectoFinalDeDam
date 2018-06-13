@@ -116,7 +116,6 @@ public class home extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         menuFacturas = new javax.swing.JMenu();
         generarFacturaVar = new javax.swing.JMenuItem();
@@ -166,7 +165,7 @@ public class home extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logoMATH.png"))); // NOI18N
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(0, 10, 280, 280);
+        jLabel1.setBounds(0, 10, 380, 280);
 
         invitado.setText("Modo Invitado");
         jPanel2.add(invitado);
@@ -339,14 +338,6 @@ public class home extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem8);
-
-        jMenuItem9.setText("Sueldo");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem9);
 
         menuEmpleados.add(jMenu2);
 
@@ -525,16 +516,6 @@ public class home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        if (this.loginExitoso) {
-            vista.ModificarSueldoEmpleado modifSueldoEmpleado = new vista.ModificarSueldoEmpleado();
-            modifSueldoEmpleado.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
-            
-        }
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void generarFacturaVarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarFacturaVarActionPerformed
         if (this.loginExitoso) {
             generarFactura gf = new generarFactura();
@@ -706,7 +687,6 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

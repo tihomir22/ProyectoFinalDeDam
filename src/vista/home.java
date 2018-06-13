@@ -6,6 +6,7 @@
 package vista;
 
 import Excepciones.clienteExistente;
+import Excepciones.empleadoExistente;
 import Excepciones.lineaFacturaExistente;
 import Excepciones.productoExistente;
 import java.awt.Color;
@@ -50,6 +51,7 @@ public class home extends javax.swing.JFrame {
             controlador.GestionFicheros.cargarProductos();
             controlador.GestionFicheros.cargarFacturas();
             controlador.GestionFicheros.redistribuirFacturas();
+            controlador.GestionFicheros.cargarEmpleados();
             //System.out.println(controlador.GestionFicheros.listaFacturas.get(0).toString());
         } catch (IOException ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,6 +62,8 @@ public class home extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (lineaFacturaExistente ex) {
+            Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (empleadoExistente ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -476,6 +480,7 @@ public class home extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         if (this.loginExitoso) {
             vista.CrearEmpleado crearEmpleado = new vista.CrearEmpleado();
+            crearEmpleado.setLocation(475, 0);
             crearEmpleado.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "DEBES LOGEARTE ANTES DE PONER USAR LAS FUNCIONALIDADES");
@@ -565,7 +570,7 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private boolean buscarUsuario(String usuario, String pass) {
-        File ficheroAbuscar = new File("usuarios.txt");
+        File ficheroAbuscar = new File("invitados.txt");
         String linea;
         String[] arrayAnalizado;
         try {

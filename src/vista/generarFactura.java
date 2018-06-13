@@ -653,12 +653,19 @@ public class generarFactura extends javax.swing.JFrame {
                 try {
                     controlador.GestionFicheros.altaFactura(nuevaFactura);
                     controlador.GestionFicheros.generarDocumentoFactura(nuevaFactura);
-                    File file = new File("tienda/facturas/PDF/" + nuevaFactura.getId() + "ConIMG.pdf");
+                    //File file = new File("tienda/facturas/PDF/" + nuevaFactura.getId() + "ConIMG.pdf");
+                    /*
                     if (file.toString().endsWith(".pdf")) {
                         Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + file);
                     } else {
                         Desktop desktop = Desktop.getDesktop();
                         desktop.open(file);
+                    }*/
+                    if (Desktop.isDesktopSupported()) {
+
+                        File file = new File("tienda/facturas/PDF/" + nuevaFactura.getId() + "ConIMG.pdf");
+                        Desktop.getDesktop().open(file);
+
                     }
 
                 } catch (IOException ex) {

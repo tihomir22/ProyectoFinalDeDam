@@ -211,6 +211,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
 
             activa = controlador.GestionFicheros.buscarFactura(codigo);
             if (this.activa != null) {
+                /*
                 File file = new File("tienda/facturas/PDF/" + activa.getId() + "ConIMG.pdf");
                 if (file.toString().endsWith(".pdf")) {
                     try {
@@ -225,6 +226,16 @@ public class ListadoFacturas extends javax.swing.JFrame {
                     } catch (IOException ex) {
                         Logger.getLogger(ListadoFacturas.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }*/
+                if (Desktop.isDesktopSupported()) {
+
+                    File file = new File("tienda/facturas/PDF/" + activa.getId() + "ConIMG.pdf");
+                    try {
+                        Desktop.getDesktop().open(file);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ListadoFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 }
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Debes eligir una factura antes de visualizarla");
@@ -260,6 +271,7 @@ public class ListadoFacturas extends javax.swing.JFrame {
         String codigo = this.tablaFacturas.getValueAt(row, 0).toString();
         activa = controlador.GestionFicheros.buscarFactura(codigo);
         if (this.activa != null) {
+            /*
             File file = new File("tienda/facturas/CSV/" + activa.getId() + ".csv");
             if (file.toString().endsWith(".csv")) {
                 try {
@@ -274,6 +286,17 @@ public class ListadoFacturas extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(ListadoFacturas.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+             */
+            if (Desktop.isDesktopSupported()) {
+
+                File file = new File("tienda/facturas/CSV/" + activa.getId() + ".csv");
+                try {
+                    Desktop.getDesktop().open(file);
+                } catch (IOException ex) {
+                    Logger.getLogger(ListadoFacturas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Debes eligir una factura antes de visualizarla");

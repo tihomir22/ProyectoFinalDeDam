@@ -36,7 +36,7 @@ public abstract class Empleado {
 
     
     public abstract String formatear();
-    
+    public abstract String formatoUsuario();
     
     /*METODOS*/
     public int getNumEmpleado() {

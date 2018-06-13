@@ -7,6 +7,7 @@ package controlador;
 
 import Excepciones.clienteExistente;
 import Excepciones.clienteNoExistente;
+import Excepciones.empleadoExistente;
 import Excepciones.lineaFacturaExistente;
 import Excepciones.productoExistente;
 import com.itextpdf.text.BadElementException;
@@ -42,6 +43,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Cliente;
+import modelo.Empleado;
+import modelo.EmpleadoAdmin;
+import modelo.EmpleadoNormal;
 import modelo.Factura;
 import modelo.LineaFactura;
 import modelo.MetodoPago;
@@ -238,7 +242,7 @@ public class GestionFicheros {
                 + "Productos que puedan deteriorarse o caducar con rapidez (por ejemplo alimentos o productos perecederos o sometidos a fecha de caducidad);\n"
                 + "Grabaciones sonoras o de video precintadas o software sellado si los mismos fueran desprecintados por ti tras su entrega;\n"
                 + "Bienes realizados según sus especificaciones o claramente personalizados, incluidos específicamente los productos de MATH Handmade;\n"
-                + "Un servicio de Amazon si se hubiera prestado y hubieras aceptado su prestación cuando solicitaste el servicio\n"
+                + "Un servicio de MATH si se hubiera prestado y hubieras aceptado su prestación cuando solicitaste el servicio\n"
                 + "Contenido digital (incluyendo apps, software digital e-books, MP3, etc.) que no hubiera sido entregado en un soporte material (es decir, no contenidos en soportes como CD o DVD) si hubieras consentido la ejecución en el momento de la entrega y sin que resulte posible su desistimiento desde dicho momento\n"
                 + "Prensa diaria, publicaciones periódicas o revistas con la excepción de contratos de suscripción; y;\n"
                 + "Bebidas alcohólicas cuyo precio haya sido acordado en el momento en que realizaste el pedido y que no puedan ser entregadas antes de 30 días, y cuyo valor real de dependa de fluctuaciones en el mercado que no podamos controlar.\n"
@@ -606,6 +610,71 @@ public class GestionFicheros {
             }
             sc.close();
         }
+    }
+
+    public static void altaEmpleado(Empleado f) throws IOException {
+        File rutaInicial = new File("tienda/empleados");
+        if (rutaInicial.exists()) {
+            File destino = new File(rutaInicial.getAbsolutePath() + "/" + f.getDni() + ".csv");
+            destino.createNewFile();
+            PrintWriter pw = new PrintWriter(destino);
+            pw.print(f.formatear());
+            pw.close();
+        } else {
+            System.out.println("No fueron inicializadas las rutas basicas, pruebe otra vez");
+            try {
+                generacionDeEstructurasBasicas();
+            } catch (IOException ex) {
+                Logger.getLogger(GestionFicheros.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public static void cargarEmpleados() throws FileNotFoundException, empleadoExistente, IOException {
+        File rutaInicial = new File("tienda/empleados/");
+        File[] fichEmpleados = rutaInicial.listFiles();
+        for (int i = 0; i < fichEmpleados.length; i++) {
+            Scanner sc = new Scanner(fichEmpleados[i]);
+            while (sc.hasNext()) {
+                String linea = sc.nextLine();
+                String[] datos = linea.split(";");
+                String tipoEmpleado = datos[0].trim();
+                int codEmple = Integer.parseInt(datos[1].trim());
+                String nombre = datos[2].trim();
+                String dni = datos[3].trim();
+                double sueldo = Double.parseDouble(datos[4].trim());
+                String cuenta = datos[5].trim();
+                String contra = datos[6].trim();
+                if (tipoEmpleado.equalsIgnoreCase("Administrador")) {
+                    int antiguedad = Integer.parseInt(datos[7].trim());
+                    EmpleadoAdmin ea = new EmpleadoAdmin(codEmple, antiguedad, dni, nombre, sueldo, cuenta, contra);
+                    System.out.println("Añadido empleado num " + ea.getNumEmpleado() + " con nombre " + ea.getNombre());
+                    controlador.GestionFicheros.listaTienda.get(0).añadirEmpleado(ea);
+                } else if (tipoEmpleado.equalsIgnoreCase("Normal")) {
+                    EmpleadoNormal en = new EmpleadoNormal(codEmple, dni, nombre, sueldo, cuenta, contra);
+                    System.out.println("Añadido empleado num " + en.getNumEmpleado() + " con nombre " + en.getNombre());
+                    controlador.GestionFicheros.listaTienda.get(0).añadirEmpleado(en);
+                }
+
+            }
+            sc.close();
+        }
+        generarUsuariosVerdaderos();
+
+    }
+
+    public static void generarUsuariosVerdaderos() throws IOException {
+        File empleadoscsv = new File("empleados.csv");
+        if (!empleadoscsv.exists()) {
+            empleadoscsv.createNewFile();
+        }
+        ArrayList<Empleado> listaEmpleados = controlador.GestionFicheros.listaTienda.get(0).getListaEmpleados();
+        PrintWriter pw = new PrintWriter(empleadoscsv);
+        for (int i = 0; i < listaEmpleados.size(); i++) {
+            pw.print(listaEmpleados.get(i).formatoUsuario()+"\n");
+        }
+        pw.close();
     }
 
 }

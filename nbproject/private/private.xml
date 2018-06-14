@@ -4,14 +4,22 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/ListadoFacturas.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/CrearEmpleado.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/CrearPiezas.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/ModificarSueldoEmpleado.form</file>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/CrearOrdenador.java</file>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/CrearCliente.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/EliminarEmpleado.java</file>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/home.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/DarPermisosAdmin.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/modelo/EmpleadoAdmin.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/generarFactura.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/ModificarClienteDireccion.java</file>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/controlador/GestionFicheros.java</file>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/EliminarCliente.java</file>
             <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/Administrador.java</file>
-            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/DarPermisosAdmin.java</file>
-            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/modelo/EmpleadoAdmin.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/ModificarNombreEmpleado.java</file>
+            <file>file:/C:/Users/sportak/Documents/GitHub/ProyectoFinalDeDam/src/vista/ModificarSueldoEmpleados.java</file>
         </group>
     </open-files>
 </project-private>

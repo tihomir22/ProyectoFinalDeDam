@@ -164,7 +164,7 @@ public class Administrador extends javax.swing.JFrame {
     private void btnCambiaSueldosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiaSueldosActionPerformed
         if (this.buscarUsuario(this.nombreUsu.getText())) {
             vista.ModificarSueldoEmpleados modifSueldo = new vista.ModificarSueldoEmpleados();
-            modifSueldo.setLocation(1155, 0);
+            modifSueldo.setLocation(1000, 0);
             modifSueldo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");
@@ -174,7 +174,7 @@ public class Administrador extends javax.swing.JFrame {
     private void btnPermisosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermisosActionPerformed
         if (this.buscarUsuario(this.nombreUsu.getText()) != false) {
             vista.DarPermisosAdmin nuevoAdmin = new vista.DarPermisosAdmin();
-            nuevoAdmin.setLocation(1155, 0);
+            nuevoAdmin.setLocation(1000, 0);
             nuevoAdmin.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "La cuenta que esta utilizando no es valida.");

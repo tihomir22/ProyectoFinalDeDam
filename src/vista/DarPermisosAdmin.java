@@ -5,6 +5,8 @@
  */
 package vista;
 
+import Excepciones.empleadoExistente;
+import Excepciones.empleadoNoExistente;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -22,7 +24,7 @@ import modelo.EmpleadoNormal;
  * @author Bienvenidos
  */
 public class DarPermisosAdmin extends javax.swing.JFrame {
-
+    
     private DefaultTableModel dtm;
 
     /**
@@ -37,7 +39,7 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         dtm.addColumn("Sueldo");
         dtm.addColumn("DNI");
         llenarTabla();
-
+        
         try {
             setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
         } catch (Exception ex) {
@@ -151,17 +153,33 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
         int nuevaAnt = Integer.parseInt(this.txtAntigüedad.getText());
         e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
         if (e != null) {
-            if (e instanceof EmpleadoAdmin) {
-                ea = (EmpleadoAdmin) e;
-                JOptionPane.showMessageDialog(this, "La antigüedad ha cabiado exitosamente");
-                DefaultTableModel model = (DefaultTableModel) this.tablaEmpleados.getModel();
-                try {
-                    controlador.GestionFicheros.altaEmpleado(e);
-                } catch (IOException ex) {
-                    Logger.getLogger(ModificarNombreEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            if (this.txtAntigüedad.getText().length() > 0) {
+                if (e instanceof EmpleadoNormal) {
+                    int ale = (int) (Math.random() * 1000);
+                    String dni = e.getDni();
+                    String nombre = e.getNombre();
+                    double sueldo = e.getSueldo();
+                    String cuenta = e.getUsuario();
+                    String pass = e.getContrasena();
+                    ea = new EmpleadoAdmin(ale, nuevaAnt, dni, nombre, sueldo, cuenta, pass);
+                    JOptionPane.showMessageDialog(this, "La antigüedad ha cabiado exitosamente");
+                    DefaultTableModel model = (DefaultTableModel) this.tablaEmpleados.getModel();
+                    try {
+                        controlador.GestionFicheros.eliminarEmpleado(e);
+                        controlador.GestionFicheros.listaTienda.get(0).eliminarEmpleado(e);
+                        controlador.GestionFicheros.altaEmpleado(ea);
+                        controlador.GestionFicheros.listaTienda.get(0).añadirEmpleado(ea);
+                        controlador.GestionFicheros.generarUsuariosVerdaderos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ModificarNombreEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (empleadoNoExistente | empleadoExistente ex) {
+                        Logger.getLogger(DarPermisosAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "No puedes dar permisos de administrador a un administrador");
                 }
             } else {
-                System.out.println("No puedes modificar la antigüedad de un administrador");
+                JOptionPane.showMessageDialog(rootPane, "Debes eligir la antigüedad del nuevo administrador");
             }
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -222,11 +240,11 @@ public class DarPermisosAdmin extends javax.swing.JFrame {
             this.tablaEmpleados.setModel(dtm);
         }
     }
-
+    
     private void borrarTable() {
         while (0 < dtm.getRowCount()) {
             dtm.removeRow(0);
         }
     }
-
+    
 }

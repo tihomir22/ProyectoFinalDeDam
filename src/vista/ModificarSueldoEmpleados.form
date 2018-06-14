@@ -159,6 +159,9 @@
           <Image iconType="3" name="/iconos/add.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

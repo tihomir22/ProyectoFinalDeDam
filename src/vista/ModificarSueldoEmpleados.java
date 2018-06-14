@@ -5,9 +5,17 @@
  */
 package vista;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Cliente;
+import modelo.Empleado;
+import modelo.EmpleadoAdmin;
+import modelo.EmpleadoNormal;
 
 /**
  *
@@ -18,12 +26,22 @@ public class ModificarSueldoEmpleados extends javax.swing.JFrame {
     /**
      * Creates new form ModificarSueldoEmpleados
      */
+    private DefaultTableModel dtm;
+
     public ModificarSueldoEmpleados() {
         initComponents();
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+        dtm = new DefaultTableModel();
+        this.tablaEmpleados.setModel(dtm);
+        dtm.addColumn("Numero empleado");
+        dtm.addColumn("DNI / NIE");
+        dtm.addColumn("Nombre");
+        dtm.addColumn("Sueldo");
+        dtm.addColumn("Tipo");
+        llenarTabla();
+
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -71,6 +89,11 @@ public class ModificarSueldoEmpleados extends javax.swing.JFrame {
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/back.png"))); // NOI18N
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add.png"))); // NOI18N
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +144,30 @@ public class ModificarSueldoEmpleados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        Empleado e;
+        double nuevoSueldo = Double.parseDouble(this.txtSueldo.getText());
+        int row = this.tablaEmpleados.getSelectedRow();
+        int numEmple = Integer.parseInt(this.tablaEmpleados.getValueAt(row, 0).toString());
+        e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(numEmple);
+        if (e != null) {
+            e.setSueldo(nuevoSueldo);
+            JOptionPane.showMessageDialog(rootPane, "Sueldo cambiado exitosamente");
+            DefaultTableModel model = (DefaultTableModel) this.tablaEmpleados.getModel();
+            llenarTabla();
+
+            //model.setValueAt(nuevaDireccion, row, 2);
+            try {
+                controlador.GestionFicheros.altaEmpleado(e);
+                controlador.GestionFicheros.generarUsuariosVerdaderos();
+            } catch (IOException ex) {
+                Logger.getLogger(ModificarClienteNombre.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("Error, empleado es null");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -166,4 +213,28 @@ public class ModificarSueldoEmpleados extends javax.swing.JFrame {
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTextField txtSueldo;
     // End of variables declaration//GEN-END:variables
+private void llenarTabla() {
+        ArrayList<Empleado> listaEmpleados = controlador.GestionFicheros.getListaTienda().get(0).getListaEmpleados();
+        borrarTable();
+        for (int i = 0; i < listaEmpleados.size(); i++) {
+            Empleado emp = listaEmpleados.get(i);
+            String tipo = "";
+            if (emp instanceof EmpleadoAdmin) {
+                tipo = "Administrador";
+            }
+            if (emp instanceof EmpleadoNormal) {
+                tipo = "Normal";
+            }
+            Object[] datos = {emp.getNumEmpleado(), emp.getDni(), emp.getNombre(), emp.getSueldo(), tipo};
+            dtm.addRow(datos);
+            this.tablaEmpleados.setModel(dtm);
+        }
+    }
+
+    private void borrarTable() {
+        while (0 < dtm.getRowCount()) {
+            dtm.removeRow(0);
+        }
+    }
+
 }

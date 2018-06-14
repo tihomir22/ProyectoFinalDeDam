@@ -11,17 +11,21 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
 import modelo.Empleado;
+import modelo.EmpleadoAdmin;
+import modelo.EmpleadoNormal;
 
 /**
  *
  * @author Bienvenidos
  */
 public class EliminarEmpleado extends javax.swing.JFrame {
-    
+
     private DefaultTableModel dtm;
+
     /**
      * Creates new form EliminarEmpleado
      */
@@ -34,10 +38,10 @@ public class EliminarEmpleado extends javax.swing.JFrame {
         dtm.addColumn("Sueldo");
         dtm.addColumn("DNI");
         llenarTabla();
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -139,11 +143,15 @@ public class EliminarEmpleado extends javax.swing.JFrame {
         int row = this.jTable1.getSelectedRow();
         String nume = this.jTable1.getValueAt(row, 0).toString().trim();
         e = controlador.GestionFicheros.getListaTienda().get(0).buscarEmpleado(Integer.parseInt(nume));
-        try{
-            controlador.GestionFicheros.getListaTienda().get(0).eliminarEmpleado(e);
-            controlador.GestionFicheros.eliminarEmpleado(e);
-            this.dtm.removeRow(row);
-        }catch(empleadoNoExistente ex){
+        try {
+            if (e instanceof EmpleadoNormal) {
+                controlador.GestionFicheros.getListaTienda().get(0).eliminarEmpleado(e);
+                controlador.GestionFicheros.eliminarEmpleado(e);
+                this.dtm.removeRow(row);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No puedes eliminar un empleado del tipo ADMINISTRADOR");
+            }
+        } catch (empleadoNoExistente ex) {
             Logger.getLogger(EliminarCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(EliminarEmpleado.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,7 +206,6 @@ public class EliminarEmpleado extends javax.swing.JFrame {
     private javax.swing.JScrollPane tablaEmpleados;
     // End of variables declaration//GEN-END:variables
 
-
     private void llenarTabla() {
         ArrayList<Empleado> empleados = controlador.GestionFicheros.getListaTienda().get(0).getListaEmpleados();
         borrarTable();
@@ -209,7 +216,7 @@ public class EliminarEmpleado extends javax.swing.JFrame {
             this.jTable1.setModel(dtm);
         }
     }
-    
+
     private void borrarTable() {
         while (0 < dtm.getRowCount()) {
             dtm.removeRow(0);

@@ -183,7 +183,7 @@ public class home extends javax.swing.JFrame {
 
         invitado.setText("Modo Invitado");
         jPanel2.add(invitado);
-        invitado.setBounds(380, 10, 90, 16);
+        invitado.setBounds(350, 10, 100, 15);
 
         cuadroAdmin.setBackground(new java.awt.Color(255, 51, 255));
         cuadroAdmin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -205,7 +205,7 @@ public class home extends javax.swing.JFrame {
 
         txtAdministrador.setText("MODO ADMINISTRADOR");
         jPanel2.add(txtAdministrador);
-        txtAdministrador.setBounds(300, 30, 140, 16);
+        txtAdministrador.setBounds(300, 30, 140, 15);
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -266,7 +266,7 @@ public class home extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(desconexion, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                            .addComponent(desconexion, javax.swing.GroupLayout.PREFERRED_SIZE, 128, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(estadoVisual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

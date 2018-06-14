@@ -34,10 +34,10 @@ public class ListadoFacturas extends javax.swing.JFrame {
     public ListadoFacturas() {
         initComponents();
         cargarComboClientes();
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -210,12 +210,9 @@ public class ListadoFacturas extends javax.swing.JFrame {
 
     private void csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csvActionPerformed
         int row = this.tablaFacturas.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(rootPane, "Debes eligir una factura antes de visualizarla");
-
-        } else {
+        System.out.println("La fila es " + row);
+        if (row >= 0) {
             String codigo = this.tablaFacturas.getValueAt(row, 0).toString();
-
             activa = controlador.GestionFicheros.buscarFactura(codigo);
             if (this.activa != null) {
                 /*
@@ -247,11 +244,14 @@ public class ListadoFacturas extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Debes eligir una factura antes de visualizarla");
             }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debes eligir una factura antes de visualizarla");
         }
     }//GEN-LAST:event_csvActionPerformed
 
     private void eliminarLineaBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarLineaBtn1ActionPerformed
         int row = this.tablaFacturas.getSelectedRow();
+        System.out.println("La fila es " + row);
         if (row != -1) {
             if (JOptionPane.showConfirmDialog(rootPane, "Seguro que deseas eliminar la factura? Se eliminará de la lista,el pdf y el csv!") == 0) {
                 Factura f;

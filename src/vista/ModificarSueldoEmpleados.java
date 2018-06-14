@@ -68,7 +68,7 @@ public class ModificarSueldoEmpleados extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/eur@2x.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel2.setText("Modificar Sueldo");
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(

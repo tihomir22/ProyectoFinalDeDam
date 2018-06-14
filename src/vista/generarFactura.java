@@ -57,10 +57,10 @@ public class generarFactura extends javax.swing.JFrame {
         this.buttonGroup2.add(this.radioltc);
         this.buttonGroup2.add(this.radioiota);
         inicializarFactura();
-        
-        try{
-        setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
-        }catch (Exception ex){
+
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../iconos/logoMATHRedimensionado.png")).getImage());
+        } catch (Exception ex) {
             Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -667,7 +667,7 @@ public class generarFactura extends javax.swing.JFrame {
                     seleccionado.getFacturas().add(nuevaFactura);
                     controlador.GestionFicheros.altaFactura(nuevaFactura);
                     controlador.GestionFicheros.generarDocumentoFactura(nuevaFactura);
-
+                    controlador.GestionFicheros.listaFacturas.add(nuevaFactura);
                     if (Desktop.isDesktopSupported()) {
 
                         File file = new File("tienda/facturas/PDF/" + nuevaFactura.getId() + ".pdf");
